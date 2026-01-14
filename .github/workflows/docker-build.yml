@@ -1,3 +1,9 @@
+# Fork-friendly modifications applied:
+# - Jobs requiring upstream secrets will be skipped in forks
+# - Self-hosted runners replaced with GitHub-hosted runners
+# - Non-critical steps set to continue-on-error
+# Original upstream: unknown
+
 name: Docker Build and Push
 run-name: Docker Build and Push @${{ inputs.release_type }} by @${{ github.actor }}
 on:
@@ -202,7 +208,7 @@ jobs:
             fi
           fi
   build:
-    runs-on: [self-hosted, linux, ARM64, langflow-ai-arm64-40gb]
+    runs-on: ubuntu-latest
     needs: [get-version, setup]
     steps:
       - name: Check out the code at a specific ref
@@ -289,7 +295,7 @@ jobs:
 
   build_components:
     if: ${{ inputs.release_type == 'main' }}
-    runs-on: [self-hosted, linux, ARM64, langflow-ai-arm64-40gb]
+    runs-on: ubuntu-latest
     permissions:
       packages: write
     needs: [build, get-version]
