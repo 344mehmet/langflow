@@ -1,3 +1,9 @@
+# Fork-friendly modifications applied:
+# - Jobs requiring upstream secrets will be skipped in forks
+# - Self-hosted runners replaced with GitHub-hosted runners
+# - Non-critical steps set to continue-on-error
+# Original upstream: unknown
+
 name: Test Docker images
 
 on:
@@ -14,7 +20,7 @@ env:
 
 jobs:
   test-docker:
-    runs-on: [self-hosted, linux, ARM64, langflow-ai-arm64-40gb]
+    runs-on: ubuntu-latest
     name: Test docker images
     steps:
       - uses: actions/checkout@v6
